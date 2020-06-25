@@ -7,12 +7,12 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      clientId: {
+      client_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      orderProductsId: {
-        type: Sequelize.INTEGER,
+      due_date: {
+        type: Sequelize.DATE,
         allowNull: false,
       },
       created_at: {

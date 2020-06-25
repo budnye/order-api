@@ -5,7 +5,6 @@ class Order extends Model {
     super.init(
       {
         clientId: Sequelize.INTEGER,
-        OrderProducstId: Sequelize.INTEGER,
         dueDate: Sequelize.DATE,
       },
       {
