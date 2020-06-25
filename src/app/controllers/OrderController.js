@@ -1,25 +1,22 @@
 import Order from '../models/Order';
 import OrderProduct from '../models/OrderProduct';
-import axios from 'axios';
+import OrderService from '../services/OrderService';
 class OrderController {
+  test() {
+    return 'abc';
+  }
+
   async index(req, res) {
-    const orders = await Order.findAll();
-    orders.map(order => {
-      axios
-        .get(`http://localhost:3000/clients/${order.clientId}`)
-        .then(response => {
-          console.log(response.data.name);
-          console.log(order.id);
-          order.id = 0;
-          console.log(order.id);
-        })
-        .catch((err) => {
-          return res.status(500).json(err);
-        });
-    });
-
-
-    return res.json(orders);
+    try {
+      const orders = await Order.findAll({ raw: true });
+      let ordersList = await Promise.all(
+        orders.map(OrderService.processOrder)
+      )
+      return res.json(ordersList);
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({ message: 'Detail: ' + error });
+    }
   }
   async store(req, res) {
     const { id, clientId, dueDate } = await Order.create(req.body);
