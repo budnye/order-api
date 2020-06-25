@@ -15,6 +15,11 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
+      is_canceled: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,

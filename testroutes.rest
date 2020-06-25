@@ -1,19 +1,34 @@
-### Horários disponíveis tradicional
-POST http://localhost:3000/clients HTTP/1.1
+### List Orders
+GET http://localhost:3001/orders HTTP/1.1
+
+### List Canceled orders
+GET http://localhost:3001/orders/canceled HTTP/1.1
+
+### Create Order
+POST http://localhost:3001/orders HTTP/1.1
 content-type: application/json
 
 {
-	"name": "Eduardo Budny Teste",
-	"email": "budny.agro2@gmail.com",
-	"birth": "11-10-1989"
+	"clientId": 1,
+	"dueDate": "10-01-2020",
+  "isCanceled": false,
+	"products": [
+		{
+			"orderId": "",
+			"productId": 1,
+			"qnt": 1
+		},
+		{
+			"orderId": "",
+			"productId": 2,
+			"qnt": 1
+		}
+	]
 }
 
-### Horários disponíveis tradicional
-POST http://localhost:8080/api/profissional/agenda/horariosdisponiveis HTTP/1.1
-content-type: application/json
-token: eyJhbGciOiJIUzI1NiIsInppcCI6IkRFRiJ9.eNp0UUuSmzAUvIqLteOADTh4FQKYiAERjxls2FBCyB5hAS5gwieVI80pcrEIl2cymyxUqu6n97pf65dQkIziKiEFokzYCBkqfzaobKvm63miFrgqhLmwdXVbNz0Ahc0JsYbM3_ra6kLKpCAc8m4yOCI56tSnzkMo7ahrOM-pjScMnkYgQepoi8MY9XDUR9fghKkrMACr2MQdtL0uDiIJ5jslKqIltB9ZnG-pZ2Z5vAcNyEHnBefWC6zWMy_T8BEdlGf8HTK3_DbER5jjguXR4ctU66KjI6ZFOLh5JPMzwBz0gImLl_CY
 
-{
-    "idProfissional": 16, 
-    "data": "27/05/2020"
-}
+### Delete Order/Cancel
+DELETE http://localhost:3001/orders/7 HTTP/1.1
+
+
+

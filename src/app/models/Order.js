@@ -6,6 +6,7 @@ class Order extends Model {
       {
         clientId: Sequelize.INTEGER,
         dueDate: Sequelize.DATE,
+        isCanceled: Sequelize.BOOLEAN,
       },
       {
         sequelize,

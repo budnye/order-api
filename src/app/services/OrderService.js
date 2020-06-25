@@ -7,9 +7,16 @@ class OrderService {
 
     async function processProduct(product) {
       try {
-        const responseProduct = await axios.get(`http://localhost:3000/product/${product.productId}`);
-        product = responseProduct.data;
-        return product;
+        const responseProduct = await axios.get(`http://localhost:3000/products/${product.productId}`);
+        const qnt = product.qnt;
+        const { id, name, info, price } = responseProduct.data;
+        return {
+          id,
+          name,
+          info,
+          price,
+          qnt,
+        };
       } catch (error) {
         throw new Error('Cant reach products api error: ' + error);
       }
@@ -18,12 +25,26 @@ class OrderService {
 
     try {
       const responseClient = await axios.get(`http://localhost:3000/clients/${order.clientId}`);
-      order['client'] = responseClient.data;
+      const { id, name, email, birth } = responseClient.data;
+      order['client'] = {
+        id,
+        name,
+        email,
+        birth,
+      }
       const orderProducts = await OrderProduct.findAll({ raw: true, where: { orderId: order.id } });
-      const products = await Promise.all(orderProducts.map(processProduct))
+      const products = await Promise.all(orderProducts.map(processProduct));
       order['products'] = products
-
-      return order;
+      const orderId = order.id;
+      const { dueDate, createdAt, client, isCanceled } = order;
+      return {
+        orderId,
+        createdAt,
+        dueDate,
+        isCanceled,
+        client,
+        products,
+      };
     } catch (error) {
       throw new Error('Cant reach client api error: ' + error);
     }
