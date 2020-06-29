@@ -7,6 +7,8 @@ routes.post('/orders', OrderController.store);
 
 routes.get('/orders', OrderController.index);
 
+routes.get('/orders/:id', OrderController.get);
+
 routes.get('/orders/canceled', OrderController.listCanceled);
 
 routes.delete('/orders/:id', OrderController.cancel);

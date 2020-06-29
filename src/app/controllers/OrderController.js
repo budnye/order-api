@@ -7,7 +7,11 @@ class OrderController {
 
   async index(req, res) {
     try {
-      const orders = await Order.findAll({ raw: true, where: { isCanceled: false } });
+      const orders = await Order.findAll({
+        raw: true, where: { isCanceled: false }, order: [
+          ['id', 'DESC']
+        ]
+      });
       let ordersList = await Promise.all(
         orders.map(OrderService.processOrder)
       )
@@ -16,6 +20,15 @@ class OrderController {
       console.log(error);
       res.status(400).json({ message: 'Detail: ' + error });
     }
+  }
+
+  async get(req, res) {
+    const order = await Order.findByPk(req.params.id);
+    if (!order) {
+      return res.status(400).json({ error: 'Invalid order id.' })
+    }
+    const processedOrder = await OrderService.processOrder(order);
+    return res.status(200).json(processedOrder);
   }
   async listCanceled(req, res) {
     try {

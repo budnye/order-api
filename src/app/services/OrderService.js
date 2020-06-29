@@ -46,7 +46,7 @@ class OrderService {
         products,
       };
     } catch (error) {
-      throw new Error('Cant reach client api error: ' + error);
+      throw new Error('Cant reach client api. ' + error);
     }
   }
 
